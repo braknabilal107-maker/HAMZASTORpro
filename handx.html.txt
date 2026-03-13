@@ -1,0 +1,215 @@
+﻿<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAMZA STORE PRO | ?????? ????????</title>
+    <style>
+        :root { --primary: #ff0000; --gold: #ffd700; --dark: #050505; --card: #121212; }
+        body { background: var(--dark); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; user-select: none; overflow-x: hidden; }
+        
+        .header-bar { background: #000; padding: 10px 20px; position: fixed; top: 0; width: 100%; z-index: 2000; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--primary); box-sizing: border-box; }
+        .search-box { background: #1a1a1a; border: 1px solid #333; color: white; padding: 8px 15px; border-radius: 20px; width: 50%; max-width: 300px; outline: none; }
+        .active-users { font-size: 0.8em; color: #2ecc71; font-weight: bold; }
+
+        .sidebar { width: 280px; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); position: fixed; height: 100vh; right: -300px; transition: 0.4s; z-index: 1500; border-left: 2px solid var(--primary); padding-top: 70px; overflow-y: auto; }
+        .sidebar.active { right: 0; }
+        .nav-link { padding: 15px; margin: 10px; background: #1a1a1a; border-radius: 10px; cursor: pointer; transition: 0.3s; text-align: right; }
+        .nav-link:hover, .nav-link.active { background: var(--primary); }
+
+        .menu-btn { position: fixed; top: 65px; right: 20px; background: var(--primary); border: none; width: 45px; height: 45px; border-radius: 50%; color: white; z-index: 1600; cursor: pointer; box-shadow: 0 0 10px var(--primary); }
+
+        .container { padding: 130px 20px 40px; }
+        .section { display: none; }
+        .section.active { display: block; animation: fadeIn 0.5s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 15px; }
+        .card { background: var(--card); border-radius: 15px; padding: 12px; border: 1px solid #222; text-align: center; transition: 0.3s; position: relative; }
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); }
+        .card img { width: 100%; height: 130px; border-radius: 10px; object-fit: cover; pointer-events: none; }
+        
+        .price { color: #2ecc71; font-weight: bold; margin: 8px 0; font-size: 1.1em; }
+        .info-text { font-size: 0.85em; color: #aaa; margin-bottom: 10px; }
+        .btn { background: var(--primary); color: white; border: none; padding: 10px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
+
+        .qr-box { text-align: center; padding: 20px; background: #fff; margin: 20px; border-radius: 10px; }
+        .qr-box img { width: 150px; }
+        .qr-box p { color: #000; font-size: 0.8em; font-weight: bold; margin-top: 5px; }
+
+        .wa-float { position: fixed; bottom: 20px; left: 20px; background: #25d366; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2000; text-decoration: none; font-size: 25px; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="header-bar">
+        <input type="text" id="searchInput" class="search-box" placeholder="?? ???? ?? ???? ?? ?????..." onkeyup="searchItems()">
+        <div class="active-users">?? ??? ????: <span id="userCount">...</span></div>
+    </div>
+
+    <button class="menu-btn" onclick="toggleSidebar()">?</button>
+
+    <div class="sidebar" id="sidebar">
+        <h2 style="text-align:center; color:var(--primary);">???? ????</h2>
+        <div class="nav-link active" onclick="showSection('accs')">?? ??? ???????? (20)</div>
+        <div class="nav-link" onclick="showSection('shahn')">?? ??? ???????</div>
+        <div class="nav-link" onclick="showSection('subs')">?? ???????? ??????</div>
+        <div class="nav-link" onclick="showSection('tour')">?? ???????? ????????</div>
+        
+        <div class="qr-box">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://braknabilal107-maker.github.io/hamzastor1/" alt="QR Code">
+            <p>???? ??????? ??????</p>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div id="accs" class="section active">
+            <h1>??? ???????? (20 ???? ????)</h1>
+            <div class="grid" id="accountsGrid">
+                <div class="card" data-name="??????"><img src="https://i.ytimg.com/vi/kE63I27_S8U/maxresdefault.jpg"><h3>?????? S1</h3><div class="price">65,000 ??</div><button class="btn" onclick="buy('??????', 65000)">????</button></div>
+                <div class="card" data-name="??? ???"><img src="https://i.ytimg.com/vi/qUq8nInS0mQ/maxresdefault.jpg"><h3>??? ??? S2</h3><div class="price">42,000 ??</div><button class="btn" onclick="buy('??? ???', 42000)">????</button></div>
+                <div class="card" data-name="???????"><img src="https://i.ytimg.com/vi/6n4uY0m_yIs/maxresdefault.jpg"><h3>??????? ????</h3><div class="price">30,000 ??</div><button class="btn" onclick="buy('???????', 30000)">????</button></div>
+                <div class="card" data-name="??????"><img src="https://i.ytimg.com/vi/vF0S62Sj9Lw/maxresdefault.jpg"><h3>?????? ??????</h3><div class="price">14,000 ??</div><button class="btn" onclick="buy('??????', 14000)">????</button></div>
+                <div class="card" data-name="????"><h3>???? ????? + 5000 ?????</h3><div class="price">11,500 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="?????"><h3>???? ????? ???? ???</h3><div class="price">25,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="????"><h3>???? ???? 80 ????</h3><div class="price">35,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="?????"><h3>????? ????? + 4 ?????</h3><div class="price">18,500 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="?????"><h3>???? ????? ???? ????</h3><div class="price">12,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="???????"><h3>???? ??? ???????</h3><div class="price">21,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="????"><h3>??? ?????? ??????</h3><div class="price">15,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="????"><h3>?????? ?????? ??????</h3><div class="price">9,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="?????"><h3>5 ????? ????? ????</h3><div class="price">4,500 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="?????"><h3>MP40 ??????? ????????</h3><div class="price">22,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="???"><h3>???? ??? ????? S10</h3><div class="price">13,500 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="????"><h3>AK ?????? ?????? ???</h3><div class="price">27,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="????"><h3>???? ??????? ??????</h3><div class="price">8,500 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="????"><h3>???? 50 ???? ?????</h3><div class="price">16,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="?????"><h3>??? ????? ??? ??????</h3><div class="price">7,000 ??</div><button class="btn">????</button></div>
+                <div class="card" data-name="????????"><h3>???? ??? ????????</h3><div class="price">45,000 ??</div><button class="btn">????</button></div>
+            </div>
+        </div>
+
+        <div id="subs" class="section">
+            <h1>???????? ??????????</h1>
+            <div class="grid">
+                <div class="card" style="border-color: var(--gold);">
+                    <h3>?? ??????? (Booyah Pass)</h3>
+                    <div class="info-text">??? ???? ????? ?????? ???????</div>
+                    <div class="price">1,100 ??</div>
+                    <button class="btn" onclick="buy('???????', 1100)">????? ????</button>
+                </div>
+                <div class="card">
+                    <h3>?? ????? ???????</h3>
+                    <div class="info-text">450 ????? (???? ??????)</div>
+                    <div class="price">450 ??</div>
+                    <button class="btn" onclick="buy('????? ???????', 450)">?????</button>
+                </div>
+                <div class="card">
+                    <h3>?? ????? ?????</h3>
+                    <div class="info-text">2600 ????? + ?????? ?????</div>
+                    <div class="price">1,950 ??</div>
+                    <button class="btn" onclick="buy('????? ?????', 1950)">?????</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="tour" class="section">
+            <h1>???????? ???????</h1>
+            <div class="grid">
+                <div class="card" style="border-color: var(--gold);">
+                    <h3>?? ??????? ??????</h3>
+                    <div class="info-text">?? ???????: 10,000 ?????</div>
+                    <div class="info-text">?? ??????: ?? ???? (21:00)</div>
+                    <div class="price">????: 100 ??</div>
+                    <button class="btn" onclick="joinTour('??????', 100)">??? ???????</button>
+                </div>
+                <div class="card">
+                    <h3>?? ????? 1vs1 (????)</h3>
+                    <div class="info-text">?? ???????: 2,500 ?????</div>
+                    <div class="info-text">?? ??????: ????? ??????</div>
+                    <div class="price">????: 50 ??</div>
+                    <button class="btn" onclick="joinTour('????', 50)">??? ???????</button>
+                </div>
+                <div class="card">
+                    <h3>?? ???? ?????????</h3>
+                    <div class="info-text">?? ???????: 5,000 ????? ???????</div>
+                    <div class="info-text">?? ??????: ???????? (20:00)</div>
+                    <div class="price">????: 200 ??</div>
+                    <button class="btn" onclick="joinTour('?????', 200)">??? ???????</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="shahn" class="section">
+            <h1>??? ??????? ???? ID</h1>
+            <input type="number" id="pID" style="width:100%; padding:15px; background:#111; border:1px solid var(--primary); color:white; border-radius:10px; margin-bottom:15px;" placeholder="???? ID ??????">
+            <div class="grid">
+                <div class="card"><h4>?? 110 ?????</h4><p class="price">250 ??</p><button class="btn" onclick="shahn(110)">???</button></div>
+                <div class="card"><h4>?? 220 ?????</h4><p class="price">480 ??</p><button class="btn" onclick="shahn(220)">???</button></div>
+                <div class="card"><h4>?? 330 ?????</h4><p class="price">650 ??</p><button class="btn" onclick="shahn(330)">???</button></div>
+                <div class="card"><h4>?? 1100 ?????</h4><p class="price">2100 ??</p><button class="btn" onclick="shahn(1100)">???</button></div>
+                <div class="card"><h4>?? 2200 ?????</h4><p class="price">4000 ??</p><button class="btn" onclick="shahn(2200)">???</button></div>
+                <div class="card"><h4>?? 5600 ?????</h4><p class="price">9500 ??</p><button class="btn" onclick="shahn(5600)">???</button></div>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="https://wa.me/213000000000" class="wa-float">??</a>
+
+    <script>
+        function updateUsers() {
+            document.getElementById('userCount').innerText = Math.floor(Math.random() * (50 - 15) + 15);
+        }
+        setInterval(updateUsers, 4000); updateUsers();
+
+        function searchItems() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                let name = card.innerText.toLowerCase();
+                card.style.display = name.includes(input) ? "block" : "none";
+            });
+        }
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        
+        function showSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.currentTarget.classList.add('active');
+            if(window.innerWidth < 1024) toggleSidebar();
+        }
+
+        function buy(n, p) {
+            let c = prompt(`??? ${n}\n?????: ${p} ??\n???? ??? ??????:`);
+            if(c) confirmSend("????", `??????: ${n}\n?????: ${c}`);
+        }
+
+        function shahn(a) {
+            let id = document.getElementById('pID').value;
+            if(id.length < 5) { alert("???? ID ?????!"); return; }
+            let c = prompt(`??? ${a} ?????\n???? ??? ??????:`);
+            if(c) confirmSend("???", `ID: ${id}\n??????: ${a}\n?????: ${c}`);
+        }
+
+        function joinTour(t, p) {
+            let name = prompt("????? ??????:");
+            let id = prompt("ID ??????:");
+            let code = prompt(`???????: ${t}\n??????: ${p} ??\n???? ??? ?????:`);
+            if(name && id && code) confirmSend("?????", `?????: ${t}\n?????: ${name}\nID: ${id}\n?????: ${code}`);
+        }
+
+        function confirmSend(s, m) {
+            alert("?? ??????? ??????? ??? ?????? ???? ?");
+            fetch("https://formspree.io/f/mqkvpvwz", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ???????: s, ????????: m })
+            });
+        }
+    </script>
+</body>
+</html>
